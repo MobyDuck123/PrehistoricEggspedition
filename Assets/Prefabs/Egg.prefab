@@ -99,6 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8ae9d97d713f644bbab0bfcfc1dccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dinosaurPrefabs:
+  - {fileID: 2303702232574210414, guid: 63947dfe7706064469a5f9af840b6cef, type: 3}
+  - {fileID: 3991361831756276839, guid: 18e7db92681cc05468a71703c293202b, type: 3}
+  - {fileID: 7160841631532394970, guid: 6ffcf7648f3c5554891812b69850191d, type: 3}
+  - {fileID: 9042935198478557440, guid: d7b063f5d4774734eb4c67dba303c9ee, type: 3}
+  - {fileID: 2899957634519512475, guid: d2a42626d7353274db8e22a51b2ef7b0, type: 3}
+  - {fileID: 6084823712734011515, guid: 09b861a29482a924d8cd84bd5e504455, type: 3}
+  - {fileID: 3244500244139815322, guid: 52c728f98e255fe4f81d5d1c3f796082, type: 3}
+  dinosaurBiome: {fileID: 0}
 --- !u!61 &6610173613085231301
 BoxCollider2D:
   m_ObjectHideFlags: 0
