@@ -7,11 +7,33 @@ using UnityEngine.Tilemaps;
 public class SpawnController : MonoBehaviour
 {
     public GameObject eggPrefab; // Reference to the egg prefab - make sure they appear in inspector 
-    public Tilemap tilemap; // Reference to your Tilemap containing the biomes - make sure they appear in inspector 
+    public Tilemap tilemap; // Reference to the Tilemap containing the biomes - make sure they appear in inspector 
+
+
+
+    public GameObject[] badDinosaurPrefabs; // Reference to the enemy AI prefab - make sure they appear in inspector 
+    private int maxDinosaurs = 7;
+    private List<GameObject> badDinosaurs = new List<GameObject>();
+
 
     void Start()
     {
         SpawnEggsOnBiomes();
+        SpawnBadDinosaursRandomly();
+    }
+
+
+    void Update()
+    {
+        // Check if any dinosaurs have been destroyed and respawn them
+        for (int i = badDinosaurs.Count - 1; i >= 0; i--)
+        {
+            if (badDinosaurs[i] == null)
+            {
+                badDinosaurs.RemoveAt(i);
+                SpawnBadDinosaur();
+            }
+        }
     }
 
     void SpawnEggsOnBiomes()
@@ -78,9 +100,9 @@ public class SpawnController : MonoBehaviour
             List<Vector3Int> tilesInBiome = kvp.Value;
             Biomes tempBiome = Biomes.None;
 
-            string spriteName = kvp.Key.name;  
+            string spriteName = kvp.Key.name;
 
-            Debug.Log("Sprite Name: " + spriteName);  
+            Debug.Log("Sprite Name: " + spriteName);
 
             if (spriteName == "DeepWater")
                 tempBiome = Biomes.DeepWater;
@@ -97,7 +119,7 @@ public class SpawnController : MonoBehaviour
             else if (spriteName == "Sand")
                 tempBiome = Biomes.Sand;
 
-            Debug.Log("Temp Biome: " + tempBiome);  
+            Debug.Log("Temp Biome: " + tempBiome);
 
             // Ensure there are tiles in the biome before spawning an egg
             if (tilesInBiome.Count > 0)
@@ -113,6 +135,65 @@ public class SpawnController : MonoBehaviour
                 egg.GetComponent<EggController>().SetBiome(tempBiome);
             }
         }
+    }
+
+
+
+
+
+    void SpawnBadDinosaursRandomly()
+    {
+        for (int i = 0; i < maxDinosaurs; i++)
+        {
+            SpawnBadDinosaur();
+        }
+    }
+
+    void SpawnBadDinosaur()
+    {
+        Vector3 randomPosition = GetRandomSpawnPosition();
+        GameObject badDinosaurPrefab = badDinosaurPrefabs[UnityEngine.Random.Range(0, badDinosaurPrefabs.Length)];
+
+        GameObject badDinosaur = Instantiate(badDinosaurPrefab, randomPosition, Quaternion.identity);
+        badDinosaurs.Add(badDinosaur);
+    }
+
+    Vector3 GetRandomSpawnPosition()
+    {
+        Vector3 randomPosition;
+
+        do
+        {
+            randomPosition = new Vector3(
+                UnityEngine.Random.Range(tilemap.cellBounds.x, tilemap.cellBounds.x + tilemap.cellBounds.size.x),
+                UnityEngine.Random.Range(tilemap.cellBounds.y, tilemap.cellBounds.y + tilemap.cellBounds.size.y),
+                0);
+        }
+        
+        while (!IsTileBelow(randomPosition));
+
+
+        return tilemap.GetCellCenterWorld(tilemap.WorldToCell(randomPosition));
+    }
+
+    bool IsTileBelow(Vector3 position)
+    {
+        // Raycast downward to check if there is a tile below the specified position
+        RaycastHit2D hit = Physics2D.Raycast(position, Vector2.down, 1f, LayerMask.GetMask("Default"));
+
+        return hit.collider != null;
+    }
+
+    bool IsPositionOccupied(Vector3 position)
+    {
+        foreach (GameObject dinosaur in badDinosaurs)
+        {
+            if (Vector3.Distance(dinosaur.transform.position, position) < 2f)  // I can define how far apart they need to spawn from each other here
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -374,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.34, y: 3.48, z: -10}
+  m_LocalPosition: {x: -0.26, y: 0.78, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -950,6 +950,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eggPrefab: {fileID: 1143215467631534561, guid: cbe193f5f62d0f64f9cd9304572234a4, type: 3}
   tilemap: {fileID: 636193202}
+  badDinosaurPrefabs:
+  - {fileID: 3991361831756276839, guid: 243fb79585714944998fa19fc008d14f, type: 3}
+  - {fileID: 2303702232574210414, guid: c3f32070a4935c242a26026e8925881d, type: 3}
+  - {fileID: 7160841631532394970, guid: d6da90671b742874888951d8b16011c2, type: 3}
+  - {fileID: 9042935198478557440, guid: 850a623980ef72d429a1975716a4d818, type: 3}
+  - {fileID: 2899957634519512475, guid: b5e40da78976c97458453ee04ac3bf53, type: 3}
+  - {fileID: 6084823712734011515, guid: b65991223dc7b2d4b958a8b5f7cdba84, type: 3}
+  - {fileID: 3244500244139815322, guid: ccc0d8fdda9a96043b651aad72d3ae61, type: 3}
 --- !u!4 &2133585024
 Transform:
   m_ObjectHideFlags: 0
